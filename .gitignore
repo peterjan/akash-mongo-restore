@@ -1,0 +1,4 @@
+.vim
+.env
+deploy.secret.yml
+dump*
