@@ -6,23 +6,22 @@ pidof -o %PPID -x $0 >/dev/null && echo "ERROR: Script $0 already running" && ex
 set -e
 
 echo "Backing up database"
-mongodump --host="mongodb://mongodb:27017"
-          --db=$MONGODB_DATABASE \
+mongodump --host=mongodb:27017 \
           --username=$MONGODB_USERNAME \
           --password=$MONGODB_PASSWORD \
-          --authenticationDatabase admin \
+          --authenticationDatabase=admin  \
+          --db=$MONGODB_DATABASE  \
           --archive=db.archive
 
 echo "Encrypting backup"
 gpg --symmetric \
     --batch \
     --passphrase $SKYNET_SEED \
-    db.archive.gpg
-
+    db.archive
 rm db.archive
 
 echo "Uploading backup"
-skylinkv2 update $SKYNET_DATAKEY db.archive.gpg
+skylinkv2 update $SKYNET_DATAKEY db.archive.gpg --keyfile /tmp/keys.txt
 rm db.archive.gpg
 
 echo "Backup complete"

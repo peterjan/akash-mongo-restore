@@ -6,7 +6,7 @@ services:
     image: ghcr.io/ovrclk/akash-postgres-restore:v0.0.4
     env:
       - MONGODB_USERNAME=root
-      - MONGODB_PASSWORD=root
+      - MONGODB_PASSWORD=password
       - MONGODB_DATABASE=akash_mongo
       - SKYNET_SEED=mysecret
       - SKYNET_DATAKEY=mongobackup

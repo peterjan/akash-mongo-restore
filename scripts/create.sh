@@ -6,5 +6,5 @@ pidof -o %PPID -x $0 >/dev/null && echo "ERROR: Script $0 already running" && ex
 set -e
 
 echo "Creating Skylink V2"
-skylinkv2 keys $SKYNET_SEED
-skylinkv2 create $SKYNET_DATAKEY
+skylinkv2 keys $SKYNET_SEED --keyfile /tmp/keys.txt
+skylinkv2 create $SKYNET_DATAKEY --keyfile /tmp/keys.txt
