@@ -11,13 +11,20 @@ services:
       - SKYNET_SEED=mysecret
       - SKYNET_DATAKEY=mongobackup
     depends_on:
-      - service: postgres
-  postgres:
-    image: postgres:12.6
-    env:
-      - POSTGRES_PASSWORD=password
+      - service: mongodb
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_DATABASE: root-db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
     expose:
-      - port: 5432
+      - port: 27017
         to:
           - global: true
           - service: cron
