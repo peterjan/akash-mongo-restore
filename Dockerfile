@@ -1,8 +1,8 @@
-FROM ubuntu:20.04
+FROM debian:buster
 
 ENV DEBIAN_FRONTEND=noninteractive 
 
-RUN apt-get update && apt-get install -y curl cron netcat nodejs npm mongodb
+RUN apt-get update && apt-get install -y curl cron netcat nodejs npm mongo-tools
 
 RUN node -v
 RUN npm install -g skylinkv2-cli

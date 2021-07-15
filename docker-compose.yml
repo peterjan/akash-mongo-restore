@@ -4,6 +4,7 @@ services:
   scheduler:
     build:
       context: .
+    container_name: scheduler
     volumes:
       - ./scripts:/scripts
       - ./crontab:/crontab
@@ -12,9 +13,13 @@ services:
     env_file: .env
 
   mongodb:
-    image: bitnami/mongodb:latest
+    image: mongo
+    container_name: mongodb
     ports:
       - "27017:27017"
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    env_file: .env
+      MONGO_INITDB_DATABASE: root-db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password

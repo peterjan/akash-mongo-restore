@@ -6,7 +6,7 @@ pidof -o %PPID -x $0 >/dev/null && echo "ERROR: Script $0 already running" && ex
 set -e
 
 echo "Backing up database"
-mongodump --quiet \
+mongodump --host="mongodb://mongodb:27017"
           --db=$MONGODB_DATABASE \
           --username=$MONGODB_USERNAME \
           --password=$MONGODB_PASSWORD \
