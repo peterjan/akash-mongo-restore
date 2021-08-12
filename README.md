@@ -31,7 +31,7 @@ services:
     depends_on: 
       - service: mongodb
   cron:
-    image: ghcr.io/ovrclk/akash-postgres-restore:v0.0.4
+    image: scheduler
     env:
       - MONGODB_USERNAME=root
       - MONGODB_PASSWORD=password
@@ -41,16 +41,12 @@ services:
     depends_on:
       - service: mongodb
   mongodb:
-    image: mongo
+    build:
+      context: ./mongodb
+    restart: always
     container_name: mongodb
     ports:
       - "27017:27017"
-    volumes:
-      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    environment:
-      MONGO_INITDB_DATABASE: root-db
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
     expose:
       - port: 27017
         to:

@@ -4,7 +4,7 @@ set -e
 
 while ! nc -z mongodb 27017; do
   echo "waiting for mongodb listening..."
-  sleep 0.1
+  sleep 1
 done
 echo "MongoDB started"
 
